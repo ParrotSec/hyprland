@@ -1,0 +1,12 @@
+usr/bin
+usr/lib/${DEB_HOST_MULTIARCH}/hyprland/
+usr/lib/${DEB_HOST_MULTIARCH}/systemd/user/
+usr/share/bash-completion
+usr/share/fish
+usr/share/hypr/hyprland.lua
+usr/share/hypr/lockdead*.png
+usr/share/hypr/stubs
+usr/share/man
+usr/share/wayland-sessions
+usr/share/xdg-desktop-portal/hyprland-portals.conf
+usr/share/zsh

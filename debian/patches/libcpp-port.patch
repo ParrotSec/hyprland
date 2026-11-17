@@ -1,0 +1,23 @@
+From: Constantin Piber <cp.piber@gmail.com>
+Date: Tue, 18 Nov 2025 15:43:15 +0800
+Subject: Fix FTBFS due to missing cast
+
+Origin: https://github.com/cpiber/hyprland-ppa/blob/0dcd5f3101f7ced40879d0f34f337b1a2cdd79ae/hyprland/debian/patches/05-libcpp-port
+Forwarded: not-needed
+---
+ src/xwayland/XWM.hpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/xwayland/XWM.hpp b/src/xwayland/XWM.hpp
+index 83c9185..56007c7 100644
+--- a/src/xwayland/XWM.hpp
++++ b/src/xwayland/XWM.hpp
+@@ -216,7 +216,7 @@ class CXWM {
+     std::vector<SP<CX11DataOffer>>            m_dndDataOffers;
+ 
+     inline xcb_connection_t*                  getConnection() {
+-        return m_connection ? *m_connection : nullptr;
++        return m_connection ? static_cast<xcb_connection_t*>(*m_connection) : nullptr;
+     }
+     struct {
+         CHyprSignalListener newWLSurface;

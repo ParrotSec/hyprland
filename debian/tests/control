@@ -1,0 +1,4 @@
+Tests:
+ check-hyprland-dev,
+Depends:
+ @,
