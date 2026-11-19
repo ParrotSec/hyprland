@@ -1,3 +1,12 @@
+hyprland (0.57.2+ds-1parrot3) echo; urgency=medium
+
+  * Fix a build failure with gcc 14: use std::visit instead of the C++26
+    member variant::visit.
+  * Pass -Wno-keyword-macro to clang only, so gcc stops burying real
+    diagnostics under "unrecognized command-line option" notes.
+
+ -- Lorenzo "Palinuro" Faletra <palinuro@parrotsec.org>  Fri, 20 Nov 2026 00:00:34 +0100
+
 hyprland (0.57.2+ds-1parrot2) echo; urgency=medium
 
   * Refresh the packaging for Parrot: team maintainer, Parrot VCS
