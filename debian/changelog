@@ -1,3 +1,19 @@
+hyprland (0.57.2+ds-1parrot5) echo; urgency=medium
+
+  * Build against aquamarine 0.15.x too by making
+    COutputState::setMaxBpc() compile-time optional.
+
+ -- Lorenzo "Palinuro" Faletra <palinuro@parrotsec.org>  Fri, 20 Nov 2026 00:32:50 +0100
+
+hyprland (0.57.2+ds-1parrot4) echo; urgency=medium
+
+  * Require aquamarine 0.16.0: this release calls
+    COutputState::setMaxBpc(), which 0.15.x does not provide.
+  * Keep the upstream wayland-protocols >= 1.49 requirement, which the
+    color management code needs for the windows-BT2100 feature.
+
+ -- Lorenzo "Palinuro" Faletra <palinuro@parrotsec.org>  Fri, 20 Nov 2026 00:26:24 +0100
+
 hyprland (0.57.2+ds-1parrot3) echo; urgency=medium
 
   * Fix a build failure with gcc 14: use std::visit instead of the C++26

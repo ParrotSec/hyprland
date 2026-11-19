@@ -10,7 +10,7 @@ Add-dumpabiver-abi-helper-to-main-CMakeLists.txt.patch
 Update-hyprland.pc-requires-to-include-lua.patch
 update-links-to-wiki.patch
 1001-relax-libinput-version-requirement.patch
-1002-relax-wayland-protocols-version-requirement.patch
 1003-fix-string-view-concatenation-for-gcc-14.patch
 1004-fix-cxx26-variant-member-visit.patch
 1005-pass-keyword-macro-flag-to-clang-only.patch
+1006-make-aquamarine-setmaxbpc-optional.patch

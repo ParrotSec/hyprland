@@ -51,7 +51,7 @@ Build-Depends:
  libxcursor-dev,
  libxkbcommon-dev (>= 1.11.0),
  pkgconf,
- wayland-protocols (>= 1.47),
+ wayland-protocols (>= 1.49),
  xwayland,
  xxd,
 Standards-Version: 4.7.2
