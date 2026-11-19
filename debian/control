@@ -1,0 +1,197 @@
+Source: hyprland
+Section: x11
+Maintainer: Debian Hyprland Maintainers <team+hyprland@tracker.debian.org>
+Uploaders:
+ Alan M Varghese (NyxTrail) <alan@digistorm.in>,
+ Carl Keinath <carl.keinath@gmail.com>,
+ Chow Loong Jin <hyperair@debian.org>,
+ Alex Myczko <tar@debian.org>,
+Build-Depends:
+ debhelper-compat (= 13),
+ cmake,
+ cpio,
+ glslang-dev,
+ glslang-tools,
+ hyprland-protocols (>= 0.8.0),
+ hyprwayland-scanner (>= 0.3.10),
+ hyprwire-scanner,
+ libaquamarine-dev (>= 0.15.0),
+ libcairo-dev,
+ libcanberra-dev,
+ libdrm-dev,
+ libegl-dev,
+ libegl1-mesa-dev,
+ libeis-dev,
+ libgbm-dev,
+ libglaze-dev (>= 7.0.0),
+ libgles-dev,
+ libhyprcursor-dev (>= 0.1.7),
+ libhyprgraphics-dev (>= 0.5.1),
+ libhyprlang-dev (>= 0.6.7),
+ libhyprutils-dev (>= 0.14.3),
+ libhyprwire-dev,
+ libinput-dev (>= 1.29),
+ liblcms2-dev,
+ liblua5.5-dev,
+ libmuparser-dev,
+ libpango1.0-dev,
+ libpixman-1-dev,
+ libre2-dev,
+ libseat-dev,
+ libsdbus-c++-dev (>= 2.0.0),
+ libssl-dev,
+ libtomlplusplus-dev,
+ libudev-dev,
+ libudis86-dev (>= 0+20221013),
+ libwayland-dev (>= 1.22.90),
+ libxcb-composite0-dev,
+ libxcb-errors-dev,
+ libxcb-icccm4-dev,
+ libxcb-render0-dev,
+ libxcb-res0-dev,
+ libxcb-xfixes0-dev,
+ libxcb1-dev,
+ libxcursor-dev,
+ libxkbcommon-dev (>= 1.11.0),
+ pkgconf,
+ wayland-protocols (>= 1.49),
+ xwayland,
+ xxd,
+Standards-Version: 4.7.4
+Homepage: https://hypr.land
+Vcs-Git: https://salsa.debian.org/hyprland-team/hyprland.git
+Vcs-Browser: https://salsa.debian.org/hyprland-team/hyprland
+
+Package: hyprland
+Architecture: any
+Multi-Arch: allowed
+Depends:
+ binutils,
+ libgl1-mesa-dri,
+ ${misc:Depends},
+ ${shlibs:Depends},
+Provides:
+ ${hyprland:Provides},
+Recommends:
+ libcap2-bin,
+ xdg-desktop-portal-hyprland,
+ xwayland,
+Description: Dynamic tiling Wayland compositor
+ Hyprland is a 100% independent, dynamic tiling Wayland compositor that doesn't
+ sacrifice on its looks.
+ .
+ It provides the latest Wayland features, is highly customizable, has eyecandy,
+ powerful plugins, easy IPC, and many other features that improve quality of
+ life. Some of its features include:
+ .
+  - Eyecandy: gradient borders, blur, animations, shadows, etc.
+  - A lot of customization
+  - 100% independent, no wlroots, no libweston, no kwin, no mutter.
+  - Custom bezier curves for the best animations
+  - Powerful plugin support
+  - Built-in plugin manager
+  - Tearing support for better gaming performance
+  - Config reloaded instantly upon saving
+  - Fully dynamic workspaces
+  - Two built-in layouts and more available as plugins
+  - Global keybinds passed to your apps of choice
+  - Tiling/pseudotiling/floating/fullscreen windows
+  - Special workspaces (scratchpads)
+  - Window groups (tabbed mode)
+  - Powerful window/monitor/layer rules
+  - Socket-based IPC
+  - Native IME and Input Panels Support
+
+Package: hyprland-backgrounds
+Architecture: all
+Multi-Arch: foreign
+Depends:
+ ${misc:Depends},
+Suggests:
+ hyprland,
+Description: Set of backgrounds packaged with the hyprland Wayland compositor
+ Hyprland is a 100% independent, dynamic tiling Wayland compositor that doesn't
+ sacrifice on its looks.
+ .
+ It provides the latest Wayland features, is highly customizable, has eyecandy,
+ powerful plugins, easy IPC, and many other features that improve quality of
+ life. Some of its features include:
+ .
+  - Eyecandy: gradient borders, blur, animations, shadows, etc.
+  - A lot of customization
+  - 100% independent, no wlroots, no libweston, no kwin, no mutter.
+  - Custom bezier curves for the best animations
+  - Powerful plugin support
+  - Built-in plugin manager
+  - Tearing support for better gaming performance
+  - Config reloaded instantly upon saving
+  - Fully dynamic workspaces
+  - Two built-in layouts and more available as plugins
+  - Global keybinds passed to your apps of choice
+  - Tiling/pseudotiling/floating/fullscreen windows
+  - Special workspaces (scratchpads)
+  - Window groups (tabbed mode)
+  - Powerful window/monitor/layer rules
+  - Socket-based IPC
+  - Native IME and Input Panels Support
+ .
+ This package contains the backgrounds included with Hyprland.
+
+Package: hyprland-dev
+Section: libdevel
+Architecture: any
+Multi-Arch: same
+Depends:
+ glslang-dev,
+ hyprland (<< ${source:Version}.),
+ hyprland (>= ${source:Version}),
+ libaquamarine-dev (>= 0.15.0),
+ libcairo2-dev | libcairo-dev,
+ libcanberra-dev,
+ libdrm-dev,
+ libegl-dev,
+ libgles-dev,
+ libhyprcursor-dev (>= 0.1.7),
+ libhyprgraphics-dev (>= 0.5.1),
+ libhyprlang-dev (>= 0.6.7),
+ libhyprutils-dev (>= 0.14.3),
+ libinput-dev (>= 1.29),
+ liblua5.5-dev,
+ libwayland-dev (>= 1.22.90),
+ libxcb-composite0-dev,
+ libxcb-errors-dev,
+ libxcb-icccm4-dev,
+ libxcb-render0-dev,
+ libxcb-res0-dev,
+ libxcb-xfixes0-dev,
+ libxcb1-dev,
+ libxkbcommon-dev (>= 1.11),
+ ${misc:Depends},
+Description: Development files for Hyprland
+ Hyprland is a 100% independent, dynamic tiling Wayland compositor that doesn't
+ sacrifice on its looks.
+ .
+ It provides the latest Wayland features, is highly customizable, has eyecandy,
+ powerful plugins, easy IPC, and many other features that improve quality of
+ life. Some of its features include:
+ .
+  - Eyecandy: gradient borders, blur, animations, shadows, etc.
+  - A lot of customization
+  - 100% independent, no wlroots, no libweston, no kwin, no mutter.
+  - Custom bezier curves for the best animations
+  - Powerful plugin support
+  - Built-in plugin manager
+  - Tearing support for better gaming performance
+  - Config reloaded instantly upon saving
+  - Fully dynamic workspaces
+  - Two built-in layouts and more available as plugins
+  - Global keybinds passed to your apps of choice
+  - Tiling/pseudotiling/floating/fullscreen windows
+  - Special workspaces (scratchpads)
+  - Window groups (tabbed mode)
+  - Powerful window/monitor/layer rules
+  - Socket-based IPC
+  - Native IME and Input Panels Support
+ .
+ This package contains header files for developing plugins
+ for Hyprland.

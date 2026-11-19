@@ -1,0 +1,38 @@
+From: Carl Keinath <carl.keinath@gmail.com>
+Date: Mon, 7 Sep 2026 08:46:55 +0200
+Subject: update links to wiki
+
+point to external, up-to-date wiki instead of github's one
+
+Forwarded: not-needed
+---
+ docs/Hyprland.1     | 2 +-
+ docs/Hyprland.1.rst | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/docs/Hyprland.1 b/docs/Hyprland.1
+index 6a83350..939ea85 100644
+--- a/docs/Hyprland.1
++++ b/docs/Hyprland.1
+@@ -38,7 +38,7 @@ Although Hyprland is pretty stable, it may have some bugs.
+ .SH CONFIGURATION
+ .PP
+ For configuration information please see
+-<\f[I]https://github.com/hyprwm/Hyprland/wiki\f[R]>.
++<\f[I]https://wiki.hypr.land\f[R]>.
+ .SH OPTIONS
+ .TP
+ \f[B]-h\f[R], \f[B]--help\f[R]
+diff --git a/docs/Hyprland.1.rst b/docs/Hyprland.1.rst
+index e10d9c6..dce05c1 100644
+--- a/docs/Hyprland.1.rst
++++ b/docs/Hyprland.1.rst
+@@ -30,7 +30,7 @@ Although Hyprland is pretty stable, it may have some bugs.
+ CONFIGURATION
+ =============
+ 
+-For configuration information please see <*https://github.com/hyprwm/Hyprland/wiki*>.
++For configuration information please see <*https://wiki.hypr.land*>.
+ 
+ OPTIONS
+ =======

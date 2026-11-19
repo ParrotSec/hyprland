@@ -1,0 +1,63 @@
+From: Constantin Piber <cp.piber@gmail.com>
+Date: Tue, 18 Nov 2025 15:43:15 +0800
+Subject: Workaround some missing gnu++26 features
+
+Can be dropped when Debian's gcc catches up
+
+Origin: https://github.com/cpiber/hyprland-ppa/blob/0dcd5f3101f7ced40879d0f34f337b1a2cdd79ae/hyprland/debian/patches/04-gcc-port
+Forwarded: not-needed
+
+Co-Authored-By: Chow Loong Jin <hyperair@debian.org>
+---
+ src/helpers/MiscFunctions.cpp | 9 ++++++++-
+ src/ipc/s1/S1.cpp             | 2 +-
+ src/output/Monitor.cpp        | 3 ++-
+ 3 files changed, 11 insertions(+), 3 deletions(-)
+
+diff --git a/src/helpers/MiscFunctions.cpp b/src/helpers/MiscFunctions.cpp
+index 299d219..ea5a18c 100644
+--- a/src/helpers/MiscFunctions.cpp
++++ b/src/helpers/MiscFunctions.cpp
+@@ -474,7 +474,14 @@ bool truthy(const std::string& str) {
+     });
+ 
+     return [&](auto&&... prefixes) -> bool {
+-        return (... || std::ranges::starts_with(str_view, prefixes));
++        return (... || [str_view](auto &&prefix) {
++                return str_view.size() >= prefix.size() && std::ranges::all_of(
++                    std::views::zip(prefix, str_view),
++                    [](const auto &pair) {
++                        return std::get<0>(pair) == std::get<1>(pair);
++                    }
++                );
++            }(prefixes));
+     }("true"sv, "yes"sv, "on"sv);
+     // clang-format on
+ }
+diff --git a/src/ipc/s1/S1.cpp b/src/ipc/s1/S1.cpp
+index 76f2e9b..db2b0e4 100644
+--- a/src/ipc/s1/S1.cpp
++++ b/src/ipc/s1/S1.cpp
+@@ -145,7 +145,7 @@ SResponse CSocket1::dispatchBatch(std::string request, pid_t pid) {
+             if (i < request.size() && (request[i + 1] == '\\' || request[i + 1] == ';'))
+                 ++i;
+             else
+-                LOG(Log::ERR, "Malformed socket1 request: invalid escape sequence {} at position {}, using it verbatim", request.subview(i, 2), i);
++                LOG(Log::ERR, "Malformed socket1 request: invalid escape sequence {} at position {}, using it verbatim", std::string_view(request).substr(i, 2), i);
+         }
+         parsedCommand << request[i];
+     }
+diff --git a/src/output/Monitor.cpp b/src/output/Monitor.cpp
+index 7775fca..3a4fb7f 100644
+--- a/src/output/Monitor.cpp
++++ b/src/output/Monitor.cpp
+@@ -705,7 +705,8 @@ bool CMonitor::applyMonitorRule(Config::CMonitorRule&& pMonitorRule) {
+         std::ranges::sort(sortedModes, sortFunc);
+         if (sortedModes.size() > 3)
+             sortedModes.erase(sortedModes.begin() + 3, sortedModes.end());
+-        requestedModes.insert_range(requestedModes.end(), sortedModes | std::views::reverse);
++        auto x = sortedModes | std::views::reverse;
++        requestedModes.insert(requestedModes.end(), x.cbegin(), x.cend());
+     };
+ 
+     // last fallback is always preferred mode
