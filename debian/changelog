@@ -1,3 +1,24 @@
+hyprland (0.57.2+ds-1parrot2) echo; urgency=medium
+
+  * Refresh the packaging for Parrot: team maintainer, Parrot VCS
+    fields, Rules-Requires-Root: no.
+  * Build against libinput 1.28 by making the tablet eraser-button
+    configuration compile-time optional.
+  * Accept wayland-protocols 1.47 instead of requiring 1.49.
+  * Fix a build failure with gcc 14 in the hexadecimal parser
+    (std::string + std::string_view).
+  * Drop the Debian CI, autopkgtest and dgit files, and rewrite
+    debian/watch in the format uscan in the stable suite can parse.
+
+ -- Lorenzo "Palinuro" Faletra <palinuro@parrotsec.org>  Thu, 19 Nov 2026 18:24:55 +0100
+
+hyprland (0.57.2+ds-1parrot1) echo; urgency=medium
+
+  * Non-maintainer upload.
+  * Rebuild for parrot os. 
+
+ -- Lorenzo "Palinuro" Faletra <palinuro@parrotsec.org>  Thu, 19 Nov 2026 17:38:59 +0100
+
 hyprland (0.57.2+ds-1) unstable; urgency=medium
 
   * New upstream version 0.57.2+ds

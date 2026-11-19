@@ -1,4 +1,6 @@
-#
-# ### dgit-maint-merge(7) workflow user need this ###
-# single-debian-patch
-# auto-commit
+tar-ignore = build
+tar-ignore = .pc
+tar-ignore = debian/changelog.dch
+tar-ignore = debian/*-cache
+tar-ignore = .*.swp
+tar-ignore = *~

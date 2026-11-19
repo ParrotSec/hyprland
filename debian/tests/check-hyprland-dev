@@ -1,6 +1,0 @@
-#!/bin/sh
-
-set -eu
-
-# ensure that hyprland.pc has all its dependencies
-pkg-config --cflags --libs hyprland
