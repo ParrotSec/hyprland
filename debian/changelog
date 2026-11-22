@@ -1,3 +1,10 @@
+hyprland (0.57.2+ds-1parrot6) echo; urgency=medium
+
+  * Rebuild against libdisplay-info 0.3.0 (libdisplay-info3) and the
+    rebuilt aquamarine and hyprtoolkit.
+
+ -- Lorenzo "Palinuro" Faletra <palinuro@parrotsec.org>  Sun, 22 Nov 2026 10:30:36 +0100
+
 hyprland (0.57.2+ds-1parrot5) echo; urgency=medium
 
   * Build against aquamarine 0.15.x too by making
