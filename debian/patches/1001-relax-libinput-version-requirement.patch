@@ -1,0 +1,64 @@
+Description: Build against libinput 1.28 by making tablet eraser-button
+ configuration optional
+ Debian and Parrot ship libinput 1.28.1 in the stable suite, while Hyprland
+ 0.57 requires libinput >= 1.29 solely for three tablet eraser-button
+ functions (LIBINPUT_1.29 symbols). Every other libinput symbol Hyprland uses
+ (3-finger drag, pressure range, custom acceleration) already exists in 1.28.
+ .
+ Lower the minimum version to 1.28 and guard the calls behind a pkg-config
+ driven compile-time check, so they come back automatically when a newer
+ libinput is available. On 1.28 the "input:tablettool:eraser_button_mode" and
+ "input:tablettool:eraser_button_override" options are accepted but have no
+ effect.
+Origin: Parrot
+Forwarded: not-needed
+Last-Update: 2026-11-19
+Index: hyprland-0.57.2+ds/CMakeLists.txt
+===================================================================
+--- hyprland-0.57.2+ds.orig/CMakeLists.txt
++++ hyprland-0.57.2+ds/CMakeLists.txt
+@@ -270,7 +270,7 @@ set_source_files_properties(${CMAKE_SOUR
+ set(XKBCOMMON_MINIMUM_VERSION 1.11.0)
+ set(WAYLAND_SERVER_MINIMUM_VERSION 1.22.91)
+ set(WAYLAND_SERVER_PROTOCOLS_MINIMUM_VERSION 1.49)
+-set(LIBINPUT_MINIMUM_VERSION 1.29)
++set(LIBINPUT_MINIMUM_VERSION 1.28)
+ 
+ pkg_check_modules(deps
+   REQUIRED
+@@ -295,6 +295,15 @@ pkg_check_modules(deps
+   libcanberra
+ )
+ 
++# libinput >= 1.29 adds tablet eraser-button configuration. Make its use
++# conditional so Hyprland still builds against older libinput releases.
++pkg_check_modules(libinput_eraser QUIET libinput>=1.29)
++if(NOT libinput_eraser_FOUND)
++  message(
++    STATUS "libinput < 1.29 found, tablet eraser-button configuration disabled")
++  add_compile_definitions(HYPRLAND_NO_LIBINPUT_ERASER_BUTTON)
++endif()
++
+ pkg_search_module(LUA REQUIRED IMPORTED_TARGET GLOBAL lua55 lua5.5 lua-55 lua-5.5 lua>=5.5 lua<5.6)
+ 
+ find_package(hyprwayland-scanner 0.3.10 REQUIRED)
+Index: hyprland-0.57.2+ds/src/managers/input/InputManager.cpp
+===================================================================
+--- hyprland-0.57.2+ds.orig/src/managers/input/InputManager.cpp
++++ hyprland-0.57.2+ds/src/managers/input/InputManager.cpp
+@@ -2130,6 +2130,7 @@ void CInputManager::setTabletToolConfigs
+             const auto NAME         = t->m_hlName;
+             const auto LIBINPUTTOOL = t->aq()->getLibinputTool();
+ 
++#ifndef HYPRLAND_NO_LIBINPUT_ERASER_BUTTON
+             if (Config::mgr()->getDeviceInt(NAME, "eraser_button_mode", "input:tablettool:eraser_button_mode") == 1)
+                 libinput_tablet_tool_config_eraser_button_set_mode(LIBINPUTTOOL, LIBINPUT_CONFIG_ERASER_BUTTON_BUTTON);
+             else
+@@ -2138,6 +2139,7 @@ void CInputManager::setTabletToolConfigs
+             const auto ERASER_BUTTON_OVERRIDE = Config::mgr()->getDeviceInt(NAME, "eraser_button_override", "input:tablettool:eraser_button_override");
+             libinput_tablet_tool_config_eraser_button_set_button(
+                 LIBINPUTTOOL, ERASER_BUTTON_OVERRIDE == 0 ? libinput_tablet_tool_config_eraser_button_get_default_button(LIBINPUTTOOL) : ERASER_BUTTON_OVERRIDE);
++#endif
+ 
+             const auto PRESSURE_RANGE_MIN = Config::mgr()->getDeviceFloat(NAME, "pressure_range_min", "input:tablettool:pressure_range_min");
+             const auto PRESSURE_RANGE_MAX = Config::mgr()->getDeviceFloat(NAME, "pressure_range_max", "input:tablettool:pressure_range_max");

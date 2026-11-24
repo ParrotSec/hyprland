@@ -1,0 +1,48 @@
+Description: Make aquamarine's COutputState::setMaxBpc() optional
+ Hyprland 0.57.2 forces the link bits-per-component for 10-bit/HDR output via
+ COutputState::setMaxBpc(), a member that only exists in aquamarine 0.16.0.
+ Against 0.15.x (which is what the stable suite ships) the build fails with
+ "class Aquamarine::COutputState has no member named 'setMaxBpc'".
+ .
+ Probe the installed aquamarine version with pkg-config and skip the call on
+ 0.15.x, where aquamarine's DRM backend already manages max_bpc on its own
+ (it tracks maxBpc bounds and retries commits without it). Behaviour on
+ 0.16.0 and newer is unchanged.
+Origin: Parrot
+Forwarded: not-needed
+Last-Update: 2026-11-20
+Index: hyprland-0.57.2+ds/CMakeLists.txt
+===================================================================
+--- hyprland-0.57.2+ds.orig/CMakeLists.txt
++++ hyprland-0.57.2+ds/CMakeLists.txt
+@@ -157,6 +157,16 @@ set(HYPRUTILS_MINIMUM_VERSION 0.14.3)
+ set(HYPRGRAPHICS_MINIMUM_VERSION 0.5.1)
+ 
+ pkg_check_modules(aquamarine_dep REQUIRED IMPORTED_TARGET aquamarine>=${AQUAMARINE_MINIMUM_VERSION})
++
++# aquamarine 0.16.0 adds COutputState::setMaxBpc(). Use it when available.
++pkg_check_modules(aquamarine_maxbpc QUIET aquamarine>=0.16.0)
++if(NOT aquamarine_maxbpc_FOUND)
++  message(
++    STATUS
++      "aquamarine < 0.16.0 found, link bits-per-component is left to aquamarine")
++  add_compile_definitions(HYPRLAND_NO_AQUAMARINE_MAXBPC)
++endif()
++
+ pkg_check_modules(hyprlang_dep REQUIRED IMPORTED_TARGET hyprlang>=${HYPRLANG_MINIMUM_VERSION})
+ pkg_check_modules(hyprcursor_dep REQUIRED IMPORTED_TARGET hyprcursor>=${HYPRCURSOR_MINIMUM_VERSION})
+ pkg_check_modules(hyprutils_dep REQUIRED IMPORTED_TARGET hyprutils>=${HYPRUTILS_MINIMUM_VERSION})
+Index: hyprland-0.57.2+ds/src/output/Monitor.cpp
+===================================================================
+--- hyprland-0.57.2+ds.orig/src/output/Monitor.cpp
++++ hyprland-0.57.2+ds/src/output/Monitor.cpp
+@@ -922,7 +922,9 @@ bool CMonitor::applyMonitorRule(Config::
+ 
+     m_pixelSize = m_size;
+ 
++#ifndef HYPRLAND_NO_AQUAMARINE_MAXBPC
+     m_output->state->setMaxBpc(RULE->m_enable10bit ? 10 : 8);
++#endif
+ 
+     static constexpr auto formats10bit = std::to_array<uint32_t>({DRM_FORMAT_XRGB2101010, DRM_FORMAT_XBGR2101010});
+     static constexpr auto formats8bit  = std::to_array<uint32_t>({DRM_FORMAT_XRGB8888, DRM_FORMAT_XBGR8888});

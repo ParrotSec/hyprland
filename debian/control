@@ -1,11 +1,8 @@
 Source: hyprland
 Section: x11
-Maintainer: Debian Hyprland Maintainers <team+hyprland@tracker.debian.org>
-Uploaders:
- Alan M Varghese (NyxTrail) <alan@digistorm.in>,
- Carl Keinath <carl.keinath@gmail.com>,
- Chow Loong Jin <hyperair@debian.org>,
- Alex Myczko <tar@debian.org>,
+Priority: optional
+Maintainer: Parrot Dev Team <team@parrotsec.org>
+Uploaders: Lorenzo "Palinuro" Faletra <palinuro@parrotsec.org>
 Build-Depends:
  debhelper-compat (= 13),
  cmake,
@@ -30,7 +27,7 @@ Build-Depends:
  libhyprlang-dev (>= 0.6.7),
  libhyprutils-dev (>= 0.14.3),
  libhyprwire-dev,
- libinput-dev (>= 1.29),
+ libinput-dev (>= 1.28),
  liblcms2-dev,
  liblua5.5-dev,
  libmuparser-dev,
@@ -57,10 +54,11 @@ Build-Depends:
  wayland-protocols (>= 1.49),
  xwayland,
  xxd,
-Standards-Version: 4.7.4
+Standards-Version: 4.7.2
+Rules-Requires-Root: no
 Homepage: https://hypr.land
-Vcs-Git: https://salsa.debian.org/hyprland-team/hyprland.git
-Vcs-Browser: https://salsa.debian.org/hyprland-team/hyprland
+Vcs-Git: https://gitlab.com/parrotsec/packages/hyprland.git
+Vcs-Browser: https://gitlab.com/parrotsec/packages/hyprland
 
 Package: hyprland
 Architecture: any
@@ -155,7 +153,7 @@ Depends:
  libhyprgraphics-dev (>= 0.5.1),
  libhyprlang-dev (>= 0.6.7),
  libhyprutils-dev (>= 0.14.3),
- libinput-dev (>= 1.29),
+ libinput-dev (>= 1.28),
  liblua5.5-dev,
  libwayland-dev (>= 1.22.90),
  libxcb-composite0-dev,

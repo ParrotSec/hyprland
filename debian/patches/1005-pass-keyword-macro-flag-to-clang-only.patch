@@ -1,0 +1,20 @@
+Description: Only pass -Wno-keyword-macro to clang
+ The flag only exists in clang, so gcc prints "unrecognized command-line
+ option '-Wno-keyword-macro'" on every diagnostic it emits, burying the real
+ error messages in the build log.
+Origin: Parrot
+Forwarded: not-needed
+Last-Update: 2026-11-19
+Index: hyprland-0.57.2+ds/CMakeLists.txt
+===================================================================
+--- hyprland-0.57.2+ds.orig/CMakeLists.txt
++++ hyprland-0.57.2+ds/CMakeLists.txt
+@@ -109,7 +109,7 @@ add_compile_options(
+   -Wall
+   -Wextra
+   -Wpedantic
+-  -Wno-keyword-macro
++  $<$<CXX_COMPILER_ID:Clang>:-Wno-keyword-macro>
+   -Wno-unused-result
+   -Wno-unused-parameter
+   -Wno-unused-value

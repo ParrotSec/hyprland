@@ -1,0 +1,25 @@
+Index: hyprland/src/config/supplementary/jeremy/Jeremy.cpp
+===================================================================
+--- hyprland.orig/src/config/supplementary/jeremy/Jeremy.cpp
++++ hyprland/src/config/supplementary/jeremy/Jeremy.cpp
+@@ -36,11 +36,18 @@ std::expected<SConfigStateReply, std::st
+ 
+         if (LUA_PATHS.first.has_value())
+             return SConfigStateReply{.path = LUA_PATHS.first.value(), .type = CONFIG_TYPE_REGULAR};
+-        else if (LUA_PATHS.second.has_value()) {
++
++        /* Use the packaged Parrot default before generating a persistent user
++         * configuration. Explicit, user and /etc/xdg choices still win above. */
++        static const auto PACKAGED_CONFIG = std::filesystem::path{"/usr/share/hypr/hyprland.lua"};
++        if (std::filesystem::exists(PACKAGED_CONFIG))
++            return SConfigStateReply{.path = PACKAGED_CONFIG.string(), .type = CONFIG_TYPE_REGULAR};
++
++        if (LUA_PATHS.second.has_value()) {
+             auto CONFIGPATH = Hyprutils::Path::fullConfigPath(LUA_PATHS.second.value(), ISDEBUG ? "hyprlandd" : "hyprland", "lua");
+             return SConfigStateReply{.path = CONFIGPATH, .type = CONFIG_TYPE_REGULAR};
+         } else
+-            return std::unexpected("Neither HOME nor XDG_CONFIG_HOME are set in the environment. Could not find config in XDG_CONFIG_DIRS or /etc/xdg.");
++            return std::unexpected("Neither HOME nor XDG_CONFIG_HOME are set in the environment. Could not find config in XDG_CONFIG_DIRS, /etc/xdg or /usr/share/hypr.");
+     };
+     static auto CONFIG_PATH = getCfgPath();
+ 
