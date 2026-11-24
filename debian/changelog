@@ -1,3 +1,11 @@
+hyprland (0.57.2+ds-1parrot7) echo; urgency=medium
+
+  * Ship the Parrot Lua configuration as the packaged fallback, with
+    optional per-user local.lua loading that fails silently when the
+    file is absent.
+
+ -- Lorenzo "Palinuro" Faletra <palinuro@parrotsec.org>  Tue, 24 Nov 2026 12:02:44 +0100
+
 hyprland (0.57.2+ds-1parrot1) echo; urgency=medium
 
   * Non-maintainer upload.

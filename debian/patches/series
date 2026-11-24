@@ -9,3 +9,4 @@ Fix-shader-inclusion-order.patch
 Add-dumpabiver-abi-helper-to-main-CMakeLists.txt.patch
 Update-hyprland.pc-requires-to-include-lua.patch
 update-links-to-wiki.patch
+parrot-default-config.patch
