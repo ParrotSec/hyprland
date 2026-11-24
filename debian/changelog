@@ -1,3 +1,9 @@
+hyprland (0.57.2+ds-1parrot9) echo; urgency=medium
+
+  * Add hyprland-guiutils and parrot-desktop-hyprland to recommended packages. 
+
+ -- Lorenzo "Palinuro" Faletra <palinuro@parrotsec.org>  Tue, 24 Nov 2026 14:40:08 +0100
+
 hyprland (0.57.2+ds-1parrot8) echo; urgency=medium
 
   * Restore all published 1parrot6 packaging and compatibility fixes

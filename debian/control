@@ -71,6 +71,8 @@ Depends:
 Provides:
  ${hyprland:Provides},
 Recommends:
+ parrot-desktop-hyprland,
+ hyprland-guiutils,
  libcap2-bin,
  xdg-desktop-portal-hyprland,
  xwayland,
