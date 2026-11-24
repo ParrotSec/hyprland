@@ -1,3 +1,10 @@
+hyprland (0.57.2+ds-1parrot10) echo; urgency=medium
+
+  * Start the Parrot panel and idle daemon from the Hyprland startup
+    event and synchronize the packaged fallback configuration.
+
+ -- Lorenzo "Palinuro" Faletra <palinuro@parrotsec.org>  Tue, 24 Nov 2026 16:40:19 +0100
+
 hyprland (0.57.2+ds-1parrot9) echo; urgency=medium
 
   * Add hyprland-guiutils and parrot-desktop-hyprland to recommended packages. 

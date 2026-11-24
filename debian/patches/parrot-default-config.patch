@@ -2,7 +2,7 @@ Index: hyprland/example/hyprland.lua
 ===================================================================
 --- hyprland.orig/example/hyprland.lua
 +++ hyprland/example/hyprland.lua
-@@ -1,366 +1,197 @@
+@@ -1,366 +1,214 @@
 --- This is an example Hyprland Lua config file.
 --- Refer to the wiki for more information.
 --- https://wiki.hypr.land/configuring/
@@ -62,19 +62,7 @@ Index: hyprland/example/hyprland.lua
 -
 -hl.env("XCURSOR_SIZE", "24")
 -hl.env("HYPRCURSOR_SIZE", "24")
-+-- Parrot Cyberpunk — teal / midnight, using Hyprland's native Lua API.
-+-- Super is the Windows/Command key. Super+F1 opens the offline guide.
-+-- Personal overrides live in $XDG_CONFIG_HOME/hypr/local.lua and load last.
-+-- This is the shared distribution default, loaded from /etc/xdg when present.
-+-- Packaged builds can also load the same file directly from /usr/share/hypr.
-+
-+hl.monitor({ output = "", mode = "preferred", position = "auto", scale = "auto" })
-+
-+-- Run once after the compositor creates its sockets, not on every config reload.
-+hl.on("hyprland.start", function()
-+    hl.exec_cmd("/usr/lib/cyberpunk/session-ready")
-+end)
- 
+-
 -
 ------------------------
 ------ PERMISSIONS -----
@@ -94,11 +82,39 @@ Index: hyprland/example/hyprland.lua
 --- hl.permission("/usr/(lib|libexec|lib64)/xdg-desktop-portal-hyprland", "screencopy", "allow")
 --- hl.permission("/usr/(bin|local/bin)/hyprpm", "plugin", "allow")
 -
--
++-- Parrot Cyberpunk — teal / midnight, using Hyprland's native Lua API.
++-- Super is the Windows/Command key. Super+F1 opens the offline guide.
++-- Personal overrides live in $XDG_CONFIG_HOME/hypr/local.lua and load last.
++-- This is the shared distribution default, loaded from /etc/xdg when present.
++-- Packaged builds can also load the same file directly from /usr/share/hypr.
++
++hl.monitor({ output = "", mode = "preferred", position = "auto", scale = "auto" })
++
++-- Start the Parrot desktop components after the compositor creates its sockets.
++-- The packages ship systemd user units, but they are not enabled by default;
++-- this is the single startup path for Waybar and Hypridle.
++local function run_if_present(path, argument)
++    local file = io.open(path, "r")
++    if not file then
++        return
++    end
++    file:close()
++    if argument then
++        hl.exec_cmd(path .. " " .. argument)
++    else
++        hl.exec_cmd(path)
++    end
++end
+ 
 ------------------------
 ----- LOOK AND FEEL ----
 ------------------------
--
++hl.on("hyprland.start", function()
++    run_if_present("/usr/lib/cyberpunk/session-ready")
++    run_if_present("/usr/lib/cyberpunk/autostart", "panel")
++    run_if_present("/usr/lib/cyberpunk/autostart", "idle")
++end)
+ 
 --- Refer to https://wiki.hypr.land/configuring/core/config-options/
  hl.config({
 +    input = {
