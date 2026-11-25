@@ -1,3 +1,10 @@
+hyprland (0.57.2+ds-1parrot11) echo; urgency=medium
+
+  * Recommend Hyprpaper and start it from the synchronized Parrot
+    Hyprland configuration.
+
+ -- Lorenzo "Palinuro" Faletra <palinuro@parrotsec.org>  Thu, 26 Nov 2026 00:15:14 +0100
+
 hyprland (0.57.2+ds-1parrot10) echo; urgency=medium
 
   * Start the Parrot panel and idle daemon from the Hyprland startup

@@ -73,6 +73,7 @@ Provides:
 Recommends:
  parrot-desktop-hyprland,
  hyprland-guiutils,
+ hyprpaper,
  libcap2-bin,
  xdg-desktop-portal-hyprland,
  xwayland,

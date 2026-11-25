@@ -2,7 +2,7 @@ Index: hyprland/example/hyprland.lua
 ===================================================================
 --- hyprland.orig/example/hyprland.lua
 +++ hyprland/example/hyprland.lua
-@@ -1,366 +1,214 @@
+@@ -1,366 +1,230 @@
 --- This is an example Hyprland Lua config file.
 --- Refer to the wiki for more information.
 --- https://wiki.hypr.land/configuring/
@@ -81,7 +81,6 @@ Index: hyprland/example/hyprland.lua
 --- hl.permission("/usr/(bin|local/bin)/grim", "screencopy", "allow")
 --- hl.permission("/usr/(lib|libexec|lib64)/xdg-desktop-portal-hyprland", "screencopy", "allow")
 --- hl.permission("/usr/(bin|local/bin)/hyprpm", "plugin", "allow")
--
 +-- Parrot Cyberpunk — teal / midnight, using Hyprland's native Lua API.
 +-- Super is the Windows/Command key. Super+F1 opens the offline guide.
 +-- Personal overrides live in $XDG_CONFIG_HOME/hypr/local.lua and load last.
@@ -92,7 +91,7 @@ Index: hyprland/example/hyprland.lua
 +
 +-- Start the Parrot desktop components after the compositor creates its sockets.
 +-- The packages ship systemd user units, but they are not enabled by default;
-+-- this is the single startup path for Waybar and Hypridle.
++-- this is the single startup path for Hyprpaper, Waybar and Hypridle.
 +local function run_if_present(path, argument)
 +    local file = io.open(path, "r")
 +    if not file then
@@ -106,11 +105,27 @@ Index: hyprland/example/hyprland.lua
 +    end
 +end
  
++local function file_exists(path)
++    local file = io.open(path, "r")
++    if not file then
++        return false
++    end
++    file:close()
++    return true
++end
+ 
 ------------------------
 ----- LOOK AND FEEL ----
 ------------------------
 +hl.on("hyprland.start", function()
 +    run_if_present("/usr/lib/cyberpunk/session-ready")
++    -- The complete desktop uses the packaged autostart helper; a bare
++    -- Hyprland installation can still start Hyprpaper directly.
++    if file_exists("/usr/lib/cyberpunk/autostart") then
++        run_if_present("/usr/lib/cyberpunk/autostart", "wallpaper")
++    else
++        run_if_present("/usr/bin/hyprpaper")
++    end
 +    run_if_present("/usr/lib/cyberpunk/autostart", "panel")
 +    run_if_present("/usr/lib/cyberpunk/autostart", "idle")
 +end)
